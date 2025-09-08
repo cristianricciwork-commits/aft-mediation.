@@ -77,12 +77,12 @@ T11 <- M_time(1, 1)
 #PART IIB: Calculation of the counter factual elements
 p_ED_H0 <- predict(model.m, newdata = data.frame(HYP = 0), type = "response")
 p_ED_H1 <- predict(model.m, newdata = data.frame(HYP = 1), type = "response")
-Y0 <- (1 - p_ED_H0) * T00 + p_ED_H0 * T01
-Y1_star <- (1 - p_ED_H0) * T10 + p_ED_H0 * T11
-Y1 <- (1 - p_ED_H1) * T10 + p_ED_H1 * T11
-NDE <- Y1_star - Y0
-NIE <- Y1 - Y1_star
-TE <- Y1 - Y0
+T0 <- (1 - p_ED_H0) * T00 + p_ED_H0 * T01
+T1_star <- (1 - p_ED_H0) * T10 + p_ED_H0 * T11
+T1 <- (1 - p_ED_H1) * T10 + p_ED_H1 * T11
+NDE <- T1_star - T0
+NIE <- T1 - T1_star
+TE <- T1 - T0
 
 #PART III: Bootstrap loop to estimate 95% CIs
 for (i in 1:n_boot) {
@@ -114,12 +114,12 @@ for (i in 1:n_boot) {
   T01 <- M_time(0, 1)
   T10 <- M_time(1, 0)
   T11 <- M_time(1, 1)
-  Y0 <- (1 - p_ED_H0) * T00 + p_ED_H0 * T01
-  Y1_star <- (1 - p_ED_H0) * T10 + p_ED_H0 * T11
-  Y1 <- (1 - p_ED_H1) * T10 + p_ED_H1 * T11
-  NDE <- Y1_star - Y0
-  NIE <- Y1 - Y1_star
-  TE <- Y1 - Y0
+  T0 <- (1 - p_ED_H0) * T00 + p_ED_H0 * T01
+  T1_star <- (1 - p_ED_H0) * T10 + p_ED_H0 * T11
+  T1 <- (1 - p_ED_H1) * T10 + p_ED_H1 * T11
+  NDE <- T1_star - T0
+  NIE <- T1 - T1_star
+  TE <- T1 - T0
   boot_results[i, ] <- c(NDE, NIE, TE)}
 # Calculate 95% CIs ignoring NA bootstrap samples
 CI_lower <- apply(boot_results, 2, quantile, probs = 0.025, na.rm = TRUE)
@@ -131,3 +131,4 @@ cat(sprintf("Baseline (H=0):        %.1f\n", Y0))
 cat(sprintf("Natural Direct Effect: %.1f (%.1f, %.1f)\n", NDE, CI_lower["NDE"], CI_upper["NDE"]))
 cat(sprintf("Natural Indirect Effect: %.1f (%.1f, %.1f)\n", NIE, CI_lower["NIE"], CI_upper["NIE"]))
 cat(sprintf("Total Effect:          %.1f (%.1f, %.1f)\n", TE, CI_lower["TE"], CI_upper["TE"]))
+
