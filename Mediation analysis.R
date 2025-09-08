@@ -127,8 +127,9 @@ CI_upper <- apply(boot_results, 2, quantile, probs = 0.975, na.rm = TRUE)
 
 # Print results with bootstrap CIs
 cat("Counterfactual Mediation Analysis with 95% Bootstrap CIs:\n")
-cat(sprintf("Baseline (H=0):        %.1f\n", Y0))
+cat(sprintf("Baseline (H=0):        %.1f\n", T0))
 cat(sprintf("Natural Direct Effect: %.1f (%.1f, %.1f)\n", NDE, CI_lower["NDE"], CI_upper["NDE"]))
 cat(sprintf("Natural Indirect Effect: %.1f (%.1f, %.1f)\n", NIE, CI_lower["NIE"], CI_upper["NIE"]))
 cat(sprintf("Total Effect:          %.1f (%.1f, %.1f)\n", TE, CI_lower["TE"], CI_upper["TE"]))
+
 
