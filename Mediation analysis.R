@@ -31,7 +31,7 @@ BIC (AFT_WB,AFT_LN,AFT_LL)
 #CUSTOM MEDIATION ANALYSIS for AFT
 library(survival)
 
-set.seed(12345)
+set.seed(21082023) #Allegra's birthday
 n_boot <- 2000
 
 calc_effects <- function(data) {
@@ -170,3 +170,4 @@ results.med <- mediate(model.m,
                        sims = 5000)
 # Summary of results
 summary(results.med)
+
